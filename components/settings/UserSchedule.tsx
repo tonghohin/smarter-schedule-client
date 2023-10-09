@@ -7,12 +7,14 @@ import { Button, Stack } from "@mui/material";
 import deepEqual from "deep-equal";
 import { useState } from "react";
 import Schedule from "../general/Schedule";
+import { getUserUid } from "@/contexts/AuthContextProvider";
 
 interface UserScheduleProps {
     schedule: Availability[];
 }
 
 export default function UserSchedule({ schedule }: UserScheduleProps) {
+    const uid = getUserUid();
     const setAlert = useSetAlert();
     const [scheduleData, setScheduleData] = useState(() => structuredClone(schedule));
 
@@ -22,7 +24,7 @@ export default function UserSchedule({ schedule }: UserScheduleProps) {
 
     async function handleSave() {
         try {
-            await Api.User.updateSchedule(scheduleData);
+            await Api.User.updateSchedule(uid, scheduleData);
             setAlert("success", "Your availability has been updated successfully!");
         } catch (error) {
             console.error(error);

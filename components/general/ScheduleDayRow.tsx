@@ -19,7 +19,7 @@ export default function ScheduleDayRow({ day, setScheduleData }: ScheduleDayRowP
         setScheduleData((prevScheduleData) => {
             const newScheduleData = prevScheduleData.map((prevDayData) => {
                 if (prevDayData.day === day.day) {
-                    return prevDayData.available ? { ...prevDayData, from: null, to: null, available: event.target.checked } : { ...prevDayData, from: dayCopy.from || "00:00:00", to: dayCopy.to || "00:00:00", available: event.target.checked };
+                    return prevDayData.available ? { ...prevDayData, from: null, to: null, available: event.target.checked } : { ...prevDayData, from: dayCopy.from || "00:00:00", to: dayCopy.to || "00:05:00", available: event.target.checked };
                 } else {
                     return prevDayData;
                 }
@@ -68,7 +68,7 @@ export default function ScheduleDayRow({ day, setScheduleData }: ScheduleDayRowP
                 {day.available ? (
                     <Stack direction="row" alignItems="center" spacing={2} minWidth={300}>
                         <TimePicker label="Start Time" value={dayjs(day.from, "HH:mm:ss")} onChange={changeStartTime} />
-                        <TimePicker label="End Time" value={dayjs(day.to, "HH:mm:ss")} onChange={changeEndTime} />
+                        <TimePicker label="End Time" value={dayjs(day.to, "HH:mm:ss")} onChange={changeEndTime} minTime={dayjs(day.from, "HH:mm:ss").add(5, "minute")} />
                     </Stack>
                 ) : (
                     <Stack direction="row" alignItems="center" spacing={2} minWidth={300}>

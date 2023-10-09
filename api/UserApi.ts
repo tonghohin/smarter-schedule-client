@@ -51,9 +51,9 @@ export namespace UserApi {
         }
     }
 
-    export async function updateSchedule(schedule: Availability[]) {
+    export async function updateSchedule(uid: string, schedule: Availability[]) {
         try {
-            const res = await fetch(`${configuration.backend}/availability`, {
+            const res = await fetch(`${configuration.backend}/availability/${uid}`, {
                 method: "POST",
                 body: JSON.stringify(schedule),
                 headers: {

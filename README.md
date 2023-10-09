@@ -1,1 +1,1 @@
-# smarter-schedule-client
+# Client side code for Smarter Schedule

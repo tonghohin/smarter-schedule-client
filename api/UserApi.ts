@@ -1,12 +1,10 @@
 import configuration from "@/configuration.json";
-import Availability from "@/interfaces/Availability";
 import User from "@/interfaces/User";
 import SignUpFormData from "@/interfaces/helpers/SignUpFormData";
-import { InitialStates } from "@/utilities/InitialStates";
 
 export namespace UserApi {
     export async function readUser(uid: string): Promise<User> {
-        const res = await fetch(`${configuration.backend}/users/${uid}`);
+        const res = await fetch(`${configuration.backend}/users/${uid}`, { cache: "no-cache" });
         const user = await res.json();
         return user;
     }
@@ -36,33 +34,18 @@ export namespace UserApi {
         }
     }
 
-    export async function readSchedule(uid: string): Promise<Availability[]> {
+    export async function updateUser(user: User): Promise<User | undefined> {
         try {
-            const res = await fetch(`${configuration.backend}/availability/${uid}`, { cache: "no-cache" });
-            const availability = await res.json();
-            if (availability.error) throw new Error(availability.error);
-            return availability;
-        } catch (error) {
-            console.error("error", error);
-            if (error instanceof Error) {
-                throw error.message;
-            }
-            return InitialStates.AVAILABILITY;
-        }
-    }
-
-    export async function updateSchedule(uid: string, schedule: Availability[]) {
-        try {
-            const res = await fetch(`${configuration.backend}/availability/${uid}`, {
-                method: "POST",
-                body: JSON.stringify(schedule),
+            const res = await fetch(`${configuration.backend}/users`, {
+                method: "PUT",
+                body: JSON.stringify(user),
                 headers: {
                     "Content-Type": "application/json"
                 }
             });
-            const updatedSchedule = await res.json();
-            if (updatedSchedule.error) throw new Error(updatedSchedule.error);
-            return updatedSchedule;
+            const updatedUser = await res.json();
+            if (updatedUser.error) throw new Error(updatedUser.error);
+            return updatedUser;
         } catch (error) {
             console.error("error", error);
             if (error instanceof Error) {

@@ -19,7 +19,7 @@ export default function ScheduleDayRow({ day, setScheduleData }: ScheduleDayRowP
         setScheduleData((prevScheduleData) => {
             const newScheduleData = prevScheduleData.map((prevDayData) => {
                 if (prevDayData.day === day.day) {
-                    return prevDayData.available ? { ...prevDayData, from: null, to: null, available: event.target.checked } : { ...prevDayData, from: dayCopy.from || "00:00:00", to: dayCopy.to || "00:05:00", available: event.target.checked };
+                    return prevDayData.available ? { ...prevDayData, from: null, to: null, available: event.target.checked } : { ...prevDayData, from: dayCopy.from || "07:00:00", to: dayCopy.to || "18:00:00", available: event.target.checked };
                 } else {
                     return prevDayData;
                 }

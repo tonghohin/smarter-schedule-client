@@ -54,9 +54,9 @@ export namespace StudentsApi {
                     "Content-Type": "application/json"
                 }
             });
-            const createdStudent = await res.json();
-            if (createdStudent.error) throw new Error(createdStudent.error);
-            return createdStudent;
+            const updatedStudent = await res.json();
+            if (updatedStudent.error) throw new Error(updatedStudent.error);
+            return updatedStudent;
         } catch (error) {
             console.error("error", error);
             if (error instanceof Error) {
@@ -72,9 +72,6 @@ export namespace StudentsApi {
             const res = await fetch(`${configuration.backend}/students/${studentId}`, {
                 method: "DELETE"
             });
-            const createdStudent = await res.json();
-            if (createdStudent.error) throw new Error(createdStudent.error);
-            return createdStudent;
         } catch (error) {
             console.error("error", error);
             if (error instanceof Error) {

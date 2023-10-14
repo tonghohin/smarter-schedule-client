@@ -1,9 +1,10 @@
 "use client";
 
 import Availability from "@/interfaces/Availability";
-import { List, Stack } from "@mui/material";
+import { List } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 import ScheduleDayRow from "./ScheduleDayRow";
+import TableDisplay from "./TableDisplay";
 
 interface ScheduleProps {
     schedule: Availability[];
@@ -12,14 +13,12 @@ interface ScheduleProps {
 
 export default function Schedule({ schedule, setScheduleData }: ScheduleProps) {
     return (
-        <Stack spacing={2}>
-            <Stack paddingX={1} border={1} borderRadius={2} borderColor="lightgray">
-                <List>
-                    {schedule.map((day) => (
-                        <ScheduleDayRow key={day.day} day={day} setScheduleData={setScheduleData} />
-                    ))}
-                </List>
-            </Stack>
-        </Stack>
+        <TableDisplay>
+            <List>
+                {schedule.map((day) => (
+                    <ScheduleDayRow key={day.day} day={day} setScheduleData={setScheduleData} />
+                ))}
+            </List>
+        </TableDisplay>
     );
 }

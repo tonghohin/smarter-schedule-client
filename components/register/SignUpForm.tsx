@@ -28,7 +28,9 @@ export default function SignUpForm() {
             setAlert("success", "You've successfully signed up! Welcome to Smarter Schedule!");
         } catch (error) {
             console.error(error);
-            if (error instanceof Error) {
+            if (typeof error === "string") {
+                setAlert("error", error);
+            } else if (error instanceof Error) {
                 setAlert("error", error.message);
             }
         }

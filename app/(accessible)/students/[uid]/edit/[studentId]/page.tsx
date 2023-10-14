@@ -15,7 +15,7 @@ export default async function Register({ params }: { params: { uid: string; stud
                 </Typography>
                 <Typography variant="h6">{student.name}</Typography>
             </Breadcrumbs>
-            <StudentForm student={student} />
+            <StudentForm student={student} update />
         </Stack>
     ) : (
         <Stack spacing={2}>

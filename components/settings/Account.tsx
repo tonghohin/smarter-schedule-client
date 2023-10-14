@@ -3,6 +3,7 @@
 import { useSetAlert } from "@/contexts/AlertContextProvider";
 import { getUserDisplayName, getUserEmail, logOut, resetPassword } from "@/contexts/AuthContextProvider";
 import { Chip, Divider, List, ListItem, Stack, Typography } from "@mui/material";
+import TableDisplay from "../general/TableDisplay";
 
 interface AccountProps {
     userPhone: string;
@@ -23,7 +24,7 @@ export default function Account({ userPhone }: AccountProps) {
     }
     return (
         <Stack spacing={2}>
-            <Stack paddingX={1} border={1} borderRadius={2} borderColor="lightgray">
+            <TableDisplay>
                 <List>
                     <ListItem>
                         <Typography color="grey" width={100}>
@@ -46,7 +47,7 @@ export default function Account({ userPhone }: AccountProps) {
                         <Typography>{userPhone}</Typography>
                     </ListItem>
                 </List>
-            </Stack>
+            </TableDisplay>
             <Chip label="Reset Password" color="primary" onClick={handleResetPassword} />
             <Chip label="Logout" onClick={logOut} />
         </Stack>

@@ -6,14 +6,17 @@ import { getUserUid } from "@/contexts/AuthContextProvider";
 import Student from "@/interfaces/Student";
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import deepEqual from "deep-equal";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Schedule from "../general/Schedule";
 
 interface StudentFormProps {
     student: Student;
+    update?: boolean;
 }
 
-export default function StudentForm({ student }: StudentFormProps) {
+export default function StudentForm({ student, update }: StudentFormProps) {
+    const router = useRouter();
     const uid = getUserUid();
     const setAlert = useSetAlert();
     const [formData, setFormData] = useState(() => structuredClone(student));
@@ -39,12 +42,32 @@ export default function StudentForm({ student }: StudentFormProps) {
                 await Api.Students.updateStudent({ ...formData, availability: scheduleData });
                 setAlert("success", `${formData.name}'s information has been updated successfully!`);
             } else {
-                await Api.Students.createStudent(uid, { ...formData, availability: scheduleData });
+                const createdStudent = await Api.Students.createStudent(uid, { ...formData, availability: scheduleData });
                 setAlert("success", `${formData.name} has been registered successfully!`);
+                if (createdStudent?.id) {
+                    router.push(`/students/${uid}/edit/${createdStudent.id}`);
+                }
             }
         } catch (error) {
             console.error(error);
-            if (error instanceof Error) {
+            if (typeof error === "string") {
+                setAlert("error", error);
+            } else if (error instanceof Error) {
+                setAlert("error", error.message);
+            }
+        }
+    }
+
+    async function handleDelete() {
+        try {
+            await Api.Students.deleteStudent(student.id);
+            setAlert("success", `${student.name} has been deleted successfully!`);
+            router.push(`/students/${uid}`);
+        } catch (error) {
+            console.error(error);
+            if (typeof error === "string") {
+                setAlert("error", error);
+            } else if (error instanceof Error) {
                 setAlert("error", error.message);
             }
         }
@@ -58,13 +81,18 @@ export default function StudentForm({ student }: StudentFormProps) {
             <TextField label="Email" variant="outlined" type="email" name="email" value={formData.email} onChange={handleFormDataChange} sx={{ flex: "1 1 0" }} required />
             <Typography variant="h6">Schedule</Typography>
             <Schedule schedule={scheduleData} setScheduleData={setScheduleData} />
-            <Stack direction="row" alignItems="center" spacing={1} width={140} minWidth={140}>
+            <Stack direction="row" alignItems="center" spacing={1}>
                 <Button disabled={isDataUnchanged} onClick={resetInputs}>
                     Cancel
                 </Button>
                 <Button type="submit" disabled={isDataUnchanged} variant="contained" onClick={handleSave}>
                     Save
                 </Button>
+                {update && (
+                    <Button variant="outlined" color="error" onClick={handleDelete}>
+                        Delete
+                    </Button>
+                )}
             </Stack>
         </Stack>
     );

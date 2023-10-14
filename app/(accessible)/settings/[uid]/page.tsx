@@ -1,11 +1,10 @@
 import { Api } from "@/api/Api";
 import EnhancedTabs from "@/components/general/EnhancedTabs";
 import Account from "@/components/settings/Account";
-import UserSchedule from "@/components/settings/UserSchedule";
+import UserForm from "@/components/settings/UserForm";
 import { Stack, Typography } from "@mui/material";
 
 export default async function Settings({ params }: { params: { uid: string } }) {
-    const scheduleData = await Api.User.readSchedule(params.uid);
     const user = await Api.User.readUser(params.uid);
 
     return (
@@ -13,8 +12,8 @@ export default async function Settings({ params }: { params: { uid: string } }) 
             <Typography variant="h6">Settings</Typography>
             <EnhancedTabs
                 tabs={[
-                    { label: "Account", component: <Account userPhone={user.phone} /> },
-                    { label: "Schedule", component: <UserSchedule schedule={scheduleData} /> }
+                    { label: "Basic Information", component: <Account userPhone={user.phone} /> },
+                    { label: "Account", component: <UserForm user={user} /> }
                 ]}
             />
         </Stack>

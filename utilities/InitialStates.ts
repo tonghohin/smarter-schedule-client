@@ -1,8 +1,8 @@
-import Availability from "@/interfaces/Availability";
+import { AvailabilityWithoutId } from "@/interfaces/Availability";
 import { StudentWithoutId } from "@/interfaces/Student";
 
 export namespace InitialStates {
-    export const AVAILABILITY: Availability[] = [
+    export const AVAILABILITY: AvailabilityWithoutId[] = [
         {
             day: 0,
             from: null,

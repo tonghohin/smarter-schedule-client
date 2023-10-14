@@ -5,13 +5,13 @@ import SignUpFormData from "@/interfaces/helpers/SignUpFormData";
 import { InitialStates } from "@/utilities/InitialStates";
 
 export namespace UserApi {
-    export async function read(uid: string): Promise<User> {
+    export async function readUser(uid: string): Promise<User> {
         const res = await fetch(`${configuration.backend}/users/${uid}`);
         const user = await res.json();
         return user;
     }
 
-    export async function create(uid: string, userInfo: SignUpFormData): Promise<User | undefined> {
+    export async function createUser(uid: string, userInfo: SignUpFormData): Promise<User | undefined> {
         const data = {
             uid: uid,
             name: userInfo.name,

@@ -7,7 +7,7 @@ interface StudentTableProps {
 }
 
 export default async function StudentTable({ uid }: StudentTableProps) {
-    const students = await Api.Students.readAllStudents(uid);
+    const students = await Api.Students.readStudents(uid);
 
     return (
         <Table>

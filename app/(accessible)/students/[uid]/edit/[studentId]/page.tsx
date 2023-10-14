@@ -5,7 +5,7 @@ import { Breadcrumbs, Button, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 
 export default async function Register({ params }: { params: { uid: string; studentId: string } }) {
-    const student = await Api.Students.readOneStudent(params.uid, params.studentId);
+    const student = await Api.Students.readStudent(params.uid, params.studentId);
 
     return student ? (
         <Stack spacing={2}>

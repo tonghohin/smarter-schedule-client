@@ -6,7 +6,7 @@ import { Stack, Typography } from "@mui/material";
 
 export default async function Settings({ params }: { params: { uid: string } }) {
     const scheduleData = await Api.User.readSchedule(params.uid);
-    const user = await Api.User.read(params.uid);
+    const user = await Api.User.readUser(params.uid);
 
     return (
         <Stack>

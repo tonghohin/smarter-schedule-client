@@ -14,6 +14,7 @@ interface StudentTableRow {
 export default function StudentTableRow({ uid, student }: StudentTableRow) {
     const router = useRouter();
     const setAlert = useSetAlert();
+
     async function handleDelete() {
         try {
             await Api.Students.deleteStudent(student.id);
@@ -25,6 +26,7 @@ export default function StudentTableRow({ uid, student }: StudentTableRow) {
             }
         }
     }
+
     return (
         <TableRow key={student.id} hover sx={{ cursor: "pointer", textDecoration: "none" }}>
             <TableCell onClick={() => router.push(`/students/${uid}/edit/${student.id}`)}>

@@ -1,74 +1,85 @@
-import Student, { StudentWithoutId } from "@/interfaces/Student";
+import configuration from "@/configuration.json";
+import Student from "@/interfaces/Student";
 
 export namespace StudentsApi {
-    export async function readAllStudents(uid: string): Promise<Student[]> {
-        return [
-            {
-                id: "00001",
-                name: "John",
-                phone: "77833213740",
-                email: "tonghohin77@gmail.com",
-                availability: [
-                    { day: 0, from: "09:00:00", to: "17:00:00", available: true },
-                    { day: 1, from: "09:00:00", to: "17:00:00", available: true },
-                    { day: 2, from: null, to: null, available: false },
-                    { day: 3, from: "09:00:00", to: "17:00:00", available: true },
-                    { day: 4, from: "09:00:00", to: "17:00:00", available: true },
-                    { day: 5, from: "09:00:00", to: "17:00:00", available: true },
-                    { day: 6, from: null, to: null, available: false }
-                ]
-            },
-            {
-                id: "00002",
-                name: "Peter",
-                phone: "38475693600",
-                email: "peter@pan.com",
-                availability: [
-                    { day: 0, from: "10:00:00", to: "17:00:00", available: true },
-                    { day: 1, from: "10:00:00", to: "17:00:00", available: true },
-                    { day: 2, from: null, to: null, available: false },
-                    { day: 3, from: "10:00:00", to: "17:00:00", available: true },
-                    { day: 4, from: "10:00:00", to: "17:00:00", available: true },
-                    { day: 5, from: "10:00:00", to: "17:00:00", available: true },
-                    { day: 6, from: null, to: null, available: false }
-                ]
-            },
-            {
-                id: "00003",
-                name: "Momo",
-                phone: "3763847290",
-                email: "momo@gmail.com",
-                availability: [
-                    { day: 0, from: "11:00:00", to: "17:00:00", available: true },
-                    { day: 1, from: "11:00:00", to: "17:00:00", available: true },
-                    { day: 2, from: null, to: null, available: false },
-                    { day: 3, from: "11:00:00", to: "17:00:00", available: true },
-                    { day: 4, from: "11:00:00", to: "17:00:00", available: true },
-                    { day: 5, from: "11:00:00", to: "17:00:00", available: true },
-                    { day: 6, from: null, to: null, available: false }
-                ]
+    export async function readStudents(uid: string): Promise<Student[]> {
+        try {
+            const res = await fetch(`${configuration.backend}/students/${uid}`, { cache: "no-cache" });
+            const students = await res.json();
+            if (students.error) throw new Error(students.error);
+            return students;
+        } catch (error) {
+            console.error("error", error);
+            if (error instanceof Error) {
+                throw error.message;
             }
-        ];
+            return [];
+        }
     }
 
-    export async function readOneStudent(uid: string, studentId: string): Promise<Student | undefined> {
-        const students = await readAllStudents(uid);
-        const student = students.find((student) => student.id === studentId);
+    export async function readStudent(uid: string, studentId: string): Promise<Student | undefined> {
+        const students = await readStudents(uid);
+        const student = students.find((student) => student.id === Number(studentId));
         return student;
     }
 
-    export async function createStudent(student: StudentWithoutId) {
-        console.log("createStudent --- student", student);
-        return student;
+    export async function createStudent(uid: string, student: Student): Promise<Student | undefined> {
+        try {
+            const res = await fetch(`${configuration.backend}/students/${uid}`, {
+                cache: "no-cache",
+                method: "POST",
+                body: JSON.stringify(student),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            const createdStudent = await res.json();
+            if (createdStudent.error) throw new Error(createdStudent.error);
+            return createdStudent;
+        } catch (error) {
+            console.error("error", error);
+            if (error instanceof Error) {
+                throw error.message;
+            }
+        }
     }
 
-    export async function updateStudent(student: Partial<Student>) {
-        console.log("updateStudent --- student", student);
-        return student;
+    export async function updateStudent(student: Student): Promise<Student | undefined> {
+        try {
+            const res = await fetch(`${configuration.backend}/students`, {
+                cache: "no-cache",
+                method: "PUT",
+                body: JSON.stringify(student),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            const createdStudent = await res.json();
+            if (createdStudent.error) throw new Error(createdStudent.error);
+            return createdStudent;
+        } catch (error) {
+            console.error("error", error);
+            if (error instanceof Error) {
+                throw error.message;
+            }
+        }
     }
 
-    export async function deleteStudent(studentId: string) {
-        console.log("deleteStudent --- studentId", studentId);
-        return studentId;
+    export async function deleteStudent(studentId?: number) {
+        if (!studentId) return;
+
+        try {
+            const res = await fetch(`${configuration.backend}/students/${studentId}`, {
+                method: "DELETE"
+            });
+            const createdStudent = await res.json();
+            if (createdStudent.error) throw new Error(createdStudent.error);
+            return createdStudent;
+        } catch (error) {
+            console.error("error", error);
+            if (error instanceof Error) {
+                throw error.message;
+            }
+        }
     }
 }

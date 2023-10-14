@@ -2,6 +2,7 @@
 
 import { Api } from "@/api/Api";
 import { useSetAlert } from "@/contexts/AlertContextProvider";
+import { getUserUid } from "@/contexts/AuthContextProvider";
 import Student from "@/interfaces/Student";
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import deepEqual from "deep-equal";
@@ -13,6 +14,7 @@ interface StudentFormProps {
 }
 
 export default function StudentForm({ student }: StudentFormProps) {
+    const uid = getUserUid();
     const setAlert = useSetAlert();
     const [formData, setFormData] = useState(() => structuredClone(student));
     const [scheduleData, setScheduleData] = useState(() => structuredClone(student.availability));
@@ -37,7 +39,7 @@ export default function StudentForm({ student }: StudentFormProps) {
                 await Api.Students.updateStudent({ ...formData, availability: scheduleData });
                 setAlert("success", `${formData.name}'s information has been updated successfully!`);
             } else {
-                await Api.Students.createStudent({ ...formData, availability: scheduleData });
+                await Api.Students.createStudent(uid, { ...formData, availability: scheduleData });
                 setAlert("success", `${formData.name} has been registered successfully!`);
             }
         } catch (error) {

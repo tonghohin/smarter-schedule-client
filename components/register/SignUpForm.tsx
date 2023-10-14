@@ -24,7 +24,7 @@ export default function SignUpForm() {
         try {
             const { user } = await registerUser(formData.email, formData.password);
             await updateUserProfile(user, formData.name);
-            await Api.User.create(user.uid, formData);
+            await Api.User.createUser(user.uid, formData);
             setAlert("success", "You've successfully signed up! Welcome to Smarter Schedule!");
         } catch (error) {
             console.error(error);

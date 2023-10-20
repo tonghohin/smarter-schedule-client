@@ -1,6 +1,11 @@
 import LoginForm from "@/components/login/LoginForm";
 import { Divider, Stack, Typography } from "@mui/material";
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+    title: "Login"
+};
 
 export default async function Login() {
     return (

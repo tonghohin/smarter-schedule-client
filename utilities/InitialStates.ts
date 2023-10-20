@@ -1,8 +1,8 @@
-import { AvailabilityWithoutId } from "@/interfaces/Availability";
-import { StudentWithoutId } from "@/interfaces/Student";
+import Availability from "@/interfaces/Availability";
+import Student from "@/interfaces/Student";
 
 export namespace InitialStates {
-    export const AVAILABILITY: AvailabilityWithoutId[] = [
+    export const AVAILABILITY: Availability[] = [
         {
             day: 0,
             from: null,
@@ -47,7 +47,7 @@ export namespace InitialStates {
         }
     ];
 
-    export const STUDENT: StudentWithoutId = {
+    export const STUDENT: Student = {
         name: "",
         phone: "",
         email: "",

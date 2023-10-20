@@ -1,5 +1,10 @@
 import SignUpForm from "@/components/register/SignUpForm";
 import { Divider, Stack, Typography } from "@mui/material";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Register"
+};
 
 export default function Login() {
     return (

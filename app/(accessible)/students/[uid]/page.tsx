@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default async function Students({ params }: { params: { uid: string } }) {
     return (
-        <Stack>
+        <Stack spacing={2}>
             <Typography variant="h6">Students</Typography>
             <Stack spacing={2}>
                 <StudentTable uid={params.uid} />

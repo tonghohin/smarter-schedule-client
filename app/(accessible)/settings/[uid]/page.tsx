@@ -8,7 +8,7 @@ export default async function Settings({ params }: { params: { uid: string } }) 
     const user = await Api.User.readUser(params.uid);
 
     return (
-        <Stack>
+        <Stack spacing={2}>
             <Typography variant="h6">Settings</Typography>
             <EnhancedTabs
                 tabs={[

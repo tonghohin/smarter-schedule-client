@@ -1,9 +1,9 @@
 "use client";
 
-import Loading from "./Loading";
-import { getUserUid, useAuth } from "@/contexts/AuthContextProvider";
+import { useAuth } from "@/contexts/AuthContextProvider";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Loading from "./Loading";
 
 interface AuthGuardProps {
     isAccessible: boolean;
@@ -13,7 +13,6 @@ interface AuthGuardProps {
 function AuthGuard({ isAccessible, children }: AuthGuardProps) {
     const router = useRouter();
     const { user, isPending } = useAuth();
-    const userUid = getUserUid();
 
     useEffect(() => {
         if (!isPending) {

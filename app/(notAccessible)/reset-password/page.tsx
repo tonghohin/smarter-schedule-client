@@ -1,5 +1,10 @@
 import ResetPasswordForm from "@/components/reset-password/ResetPasswordForm";
 import { Divider, Stack, Typography } from "@mui/material";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Reset Password"
+};
 
 export default function ResetPassword() {
     return (

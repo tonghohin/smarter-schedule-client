@@ -1,11 +1,6 @@
 import AuthGuard from "@/components//general/AuthGuard";
 import AlertMessage from "@/components/general/AlertMessage";
 import { Paper, Stack } from "@mui/material";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-    title: "Login"
-};
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (

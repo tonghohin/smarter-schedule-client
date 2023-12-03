@@ -4,7 +4,7 @@ import { Api } from "@/api/Api";
 import { useSetAlert } from "@/contexts/AlertContextProvider";
 import { getUserUid } from "@/contexts/AuthContextProvider";
 import Student from "@/interfaces/Student";
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { Button, FormControlLabel, Stack, Switch, TextField, Typography } from "@mui/material";
 import deepEqual from "deep-equal";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -25,10 +25,17 @@ export default function StudentForm({ student, update }: StudentFormProps) {
 
     function handleFormDataChange(e: React.ChangeEvent<HTMLInputElement>) {
         setFormData((prevFormData) => {
-            return {
-                ...prevFormData,
-                [e.target.name]: e.target.value
-            };
+            if (e.target.type === "checkbox") {
+                return {
+                    ...prevFormData,
+                    [e.target.name]: e.target.checked
+                };
+            } else {
+                return {
+                    ...prevFormData,
+                    [e.target.name]: e.target.value
+                };
+            }
         });
     }
 
@@ -75,6 +82,7 @@ export default function StudentForm({ student, update }: StudentFormProps) {
 
     return (
         <Stack justifyContent="space-evenly" spacing={2}>
+            <FormControlLabel control={<Switch name="active" checked={formData.active} onChange={handleFormDataChange} />} label={formData.active ? "Active" : "Inactive"} />
             <Typography variant="h6">Contact Information</Typography>
             <TextField label="Name" variant="outlined" name="name" value={formData.name} onChange={handleFormDataChange} sx={{ flex: "1 1 0" }} required />
             <TextField label="Phone" variant="outlined" type="tel" name="phone" value={formData.phone} onChange={handleFormDataChange} sx={{ flex: "1 1 0" }} required />

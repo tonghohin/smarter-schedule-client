@@ -51,6 +51,7 @@ export namespace InitialStates {
         name: "",
         phone: "",
         email: "",
-        availability: AVAILABILITY
+        availability: AVAILABILITY,
+        active: true
     };
 }

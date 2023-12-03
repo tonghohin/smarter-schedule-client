@@ -6,4 +6,5 @@ export default interface Student {
     phone: string;
     email: string;
     availability: Availability[];
+    active: boolean;
 }
